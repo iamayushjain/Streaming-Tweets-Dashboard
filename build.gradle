@@ -30,5 +30,10 @@ dependencies {
 
     implementation 'org.twitter4j:twitter4j-core:4.0.6'
 
+    implementation 'edu.stanford.nlp:stanford-corenlp:3.9.2'
+    implementation 'uk.ac.gate.plugins:stanford-corenlp:8.5.1'
+    compile group: 'edu.stanford.nlp', name: 'stanford-corenlp', version: '3.9.2'
+    compile group: 'edu.stanford.nlp', name: 'stanford-corenlp', version: '3.9.2', classifier: 'models'
+
     compileOnly 'org.projectlombok:lombok:1.16.20'
 }
