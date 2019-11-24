@@ -1,4 +1,4 @@
-package com.stream.tweets;
+package com.stream.tweets.session;
 
 import java.util.HashMap;
 

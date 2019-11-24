@@ -2,8 +2,17 @@ package com.stream.tweets.model;
 
 import java.util.List;
 
+/**
+ * payload to be return from service
+ */
 public class TweetsListPayload {
+    /**
+     * response tweets object list
+     */
     private List<Tweets> tweets;
+    /**
+     * max offset of each query
+     */
     private Long lastSinceId;
 
     public TweetsListPayload(List<Tweets> tweets, Long lastSinceId) {

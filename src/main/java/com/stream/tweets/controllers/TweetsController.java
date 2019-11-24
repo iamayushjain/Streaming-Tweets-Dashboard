@@ -25,7 +25,6 @@ import java.util.List;
 public class TweetsController {
 
     private final String STREAM_TWEETS_API = "/tweets/";
-    private final String STREAM_TWEETS_WITH_SENTIMENTS_API = "/tweets_sentiment/";
 
     @Autowired
     private TweetsServiceImpl tweetsServiceImpl;
@@ -43,22 +42,6 @@ public class TweetsController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public BaseResponse streamTweetsFromSource(@RequestParam(value = "source") String source) throws TwitterException {
-        if (source.isEmpty())
-            return getInvalidParamsResponse();
-
-        List<Tweets> playLists = tweetsServiceImpl.getDataFromTags(source, new Long("0")).getTweetList();
-        BaseResponse response = new BaseResponse();
-        response.setStatusCode(Constants.SUCCESS_STATUS_CODE);
-        response.setData(playLists);
-        return response;
-    }
-
-    @RequestMapping(
-            value = STREAM_TWEETS_WITH_SENTIMENTS_API,
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public BaseResponse streamTweetsWithSentimentsFromSource(@RequestParam(value = "source") String source) throws TwitterException {
         if (source.isEmpty())
             return getInvalidParamsResponse();
 

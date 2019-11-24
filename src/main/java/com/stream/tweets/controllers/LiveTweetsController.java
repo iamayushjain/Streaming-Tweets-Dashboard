@@ -1,8 +1,8 @@
 package com.stream.tweets.controllers;
 
-import com.stream.tweets.SessionManager;
 import com.stream.tweets.model.TweetsListPayload;
 import com.stream.tweets.service.TweetsServiceImpl;
+import com.stream.tweets.session.SessionManager;
 import com.stream.tweets.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;

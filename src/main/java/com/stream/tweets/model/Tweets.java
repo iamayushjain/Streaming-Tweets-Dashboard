@@ -1,14 +1,28 @@
 package com.stream.tweets.model;
 
+/**
+ * Tweets response skeleton class
+ */
+@SuppressWarnings("unused")
 public class Tweets {
-    String user;
+    private String userName;
+    private String userDisplayName;
+    private String text;
 
-    public String getUser() {
-        return user;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserDisplayName() {
+        return userDisplayName;
+    }
+
+    public void setUserDisplayName(String userDisplayName) {
+        this.userDisplayName = userDisplayName;
     }
 
     public String getText() {
@@ -19,10 +33,9 @@ public class Tweets {
         this.text = text;
     }
 
-    String text;
-
-    public Tweets(String user, String text) {
-        this.user = user;
+    public Tweets(String userName, String userDisplayName, String text) {
+        this.userName = userName;
+        this.userDisplayName = userDisplayName;
         this.text = text;
     }
 }

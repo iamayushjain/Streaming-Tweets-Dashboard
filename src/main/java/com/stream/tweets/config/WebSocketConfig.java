@@ -1,5 +1,6 @@
-package com.stream.tweets;
+package com.stream.tweets.config;
 
+import com.stream.tweets.session.SessionManager;
 import com.stream.tweets.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

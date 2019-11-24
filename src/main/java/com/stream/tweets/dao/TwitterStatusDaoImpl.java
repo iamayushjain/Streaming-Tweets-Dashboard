@@ -1,5 +1,6 @@
 package com.stream.tweets.dao;
 
+import com.stream.tweets.config.TwitterConfigurationInstance;
 import com.stream.tweets.model.StatusListPayload;
 import org.springframework.stereotype.Repository;
 import twitter4j.Query;
@@ -47,4 +48,3 @@ public class TwitterStatusDaoImpl implements TwitterStatusDao {
         return new StatusListPayload(twitter.getUserTimeline(user), lastOffsetId);
     }
 }
-    
