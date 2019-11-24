@@ -1,6 +1,9 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '2.0.4.RELEASE'
 }
+
+apply plugin: 'io.spring.dependency-management'
 
 group 'Streaming Tweets Dashboard '
 version '1.0-SNAPSHOT'
@@ -16,11 +19,16 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'mysql:mysql-connector-java'
-    implementation "org.webjars:webjars-locator-core"
-    implementation "org.webjars:sockjs-client:1.0.2"
-    implementation "org.webjars:stomp-websocket:2.3.3"
-    implementation "org.webjars:bootstrap:3.3.7"
-    implementation "org.webjars:jquery:3.1.0"
 
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.webjars:webjars-locator-core'
+    implementation 'org.webjars:sockjs-client:1.0.2'
+    implementation 'org.webjars:stomp-websocket:2.3.3'
+
+    implementation 'org.webjars:bootstrap:3.3.7'
+    implementation 'org.webjars:jquery:3.1.0'
+
+    implementation 'org.twitter4j:twitter4j-core:4.0.6'
+
+    compileOnly 'org.projectlombok:lombok:1.16.20'
 }
