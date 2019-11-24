@@ -1,2 +1,3 @@
 rootProject.name = 'Streaming Tweets Dashboard '
+include 'Tweets Sentimental Analysis'
 
