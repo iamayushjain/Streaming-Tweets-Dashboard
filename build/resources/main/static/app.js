@@ -45,7 +45,6 @@ function sendName() {
 function showTweet(message) {
     $("#feedBlock").prepend("<tr><td>" + message + "</td></tr>");
     text_string+=message;
-    generateWordCount();
 }
 
 $(function () {
