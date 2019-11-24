@@ -14,6 +14,7 @@ Request params:
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
 | `source` | `string` | **Required**. Your search keyword |
+
 ##Search for a specific twitter account
 Aim to get tweets for a specific twitter account
 ```http
@@ -69,7 +70,8 @@ WebSockets pushes the JSON response contains new tweets
 ```javascript
 [
     {
-        "user" : string,
+        "userName" : string,
+        "userDisplayName" : string,
         "text" : string
     }
 ]
@@ -98,3 +100,24 @@ public class WebSocketConfig {
 ###### onDisconnectEvent
 > Remove sessionId in the `SessionManager`.
 > Terminate thread for the sessionId.
+
+
+## Unit Testing
+- `ApplicationTest` @SpringBootTest annotation tells Spring Boot to go and look for a main configuration class (one with @SpringBootApplication for instance), and use that to start a Spring application context.
+- `TweetsServiceImplTest`
+###### checkIfTweetsAreOfSameUser
+> Validate each tweet by a particular user.
+###### checkIfTweetsAreFromDifferentUsers
+> Validate non null response for data payload in `BaseResponse`
+
+## SessionManager
+HashMap where `SessionId` is key `MaxSinceId` as value. Ideally this service works as standalone entity in distributed system.
+Each user query will have different `SessionId`.
+
+### Todo
+- Integrate Sliding window to make sure the `getRateLimitStatus()` doesn't overflow.
+- Enhance thread logic in web socket live feed controller.
+- Add controller test cases.
+
+## Twitter Java Api Examples
+- (http://twitter4j.org/en/code-examples.html "Twitter Java Api Examples")
