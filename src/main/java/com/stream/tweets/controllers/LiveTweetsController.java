@@ -11,10 +11,14 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Live tweets dashboard controller
+ */
 @RestController
+@SuppressWarnings("unused")
 public class LiveTweetsController {
 
-    private final String LIVE_TWEETS_API = "/hello/{source}";
+    private final String LIVE_TWEETS_API = "/live/{source}";
 
 
     @Autowired
@@ -23,23 +27,31 @@ public class LiveTweetsController {
     @Autowired
     private TweetsServiceImpl tweetsServiceImpl;
 
+    /**
+     * Web socket implementation for live tweets
+     * @implNote Session Id help us to determine whether the socket connection is open or not.
+     * Session Manager contains last sinceId for each user query
+     * @param source         : String
+     * @param headerAccessor : {@link SimpMessageHeaderAccessor}
+     * @throws Exception : {@link twitter4j.TwitterException}
+     */
     @MessageMapping({LIVE_TWEETS_API})
     public void liveTweets(@DestinationVariable String source, SimpMessageHeaderAccessor headerAccessor) throws Exception {
         String sessionId = headerAccessor.getSessionId();
-        while(SessionManager.userIdMapping.containsKey(sessionId)){
+        while ((sessionId != null && !sessionId.isEmpty()) && SessionManager.userIdMapping.containsKey(sessionId)) {
 
             TweetsListPayload tweetsListPayload = tweetsServiceImpl.getDataFromTags(source, SessionManager.userIdMapping.get(sessionId));
-            simpMessagingTemplate.convertAndSend(Constants.TOPIC_BROKER+"source." + source, tweetsListPayload.getTweetList());
+            simpMessagingTemplate.convertAndSend(Constants.TOPIC_BROKER + Constants.TOPIC_BROKER_SOURCE + Constants.TOPIC_BROKER_SOURCE_DELIMITER + source, tweetsListPayload.getTweetList());
 
-            synchronized (this){
-                if(SessionManager.userIdMapping.containsKey(sessionId))
+            synchronized (this) {
+                if (SessionManager.userIdMapping.containsKey(sessionId))
                     SessionManager.userIdMapping.put(sessionId, tweetsListPayload.getLastSinceId());
-                else{
+                else {
                     break;
                 }
             }
-            Thread.sleep(Constants.REFRESH_RATE); // simulated delay
+            // simulated delay
+            Thread.sleep(Constants.REFRESH_RATE);
         }
     }
-
 }

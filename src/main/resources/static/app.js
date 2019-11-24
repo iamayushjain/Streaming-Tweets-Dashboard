@@ -39,7 +39,7 @@ function disconnect() {
 }
 
 function sendName() {
-    stompClient.send("/app/hello/"+source, {}, {})
+    stompClient.send("/app/live/"+source, {}, {})
 }
 
 function showTweet(message) {
