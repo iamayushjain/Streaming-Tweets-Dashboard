@@ -1,7 +1,5 @@
 package com.stream.tweets.model;
 
-import twitter4j.User;
-
 public class Tweets {
     String user;
 

@@ -12,8 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @SuppressWarnings("unused")
 public class BaseResponse {
-
+    /**
+     * Status code to help application determine fulfillment of the request
+     */
     private int statusCode;
+    /**
+     * Object to be returned to the application
+     */
     private Object data;
 
     public int getStatusCode() {

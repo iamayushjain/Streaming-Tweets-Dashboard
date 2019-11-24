@@ -2,31 +2,49 @@ package com.stream.tweets.dao;
 
 import com.stream.tweets.model.StatusListPayload;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-import twitter4j.*;
+import twitter4j.Query;
+import twitter4j.QueryResult;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
 
 /**
- * Query is properly indexed and should not exceed non-unique key lookup scan for sub class and index scan for primary table
+ * Implementation logic for fetching twitter status
  */
 @Repository
+@SuppressWarnings("unused")
 public class TwitterStatusDaoImpl implements TwitterStatusDao {
 
+    /**
+     * Implementation to fetch list of tweets from a particular hash tag or word
+     *
+     * @param source       :String
+     * @param lastOffsetId : Long
+     * @return StatusListPayload
+     * @throws TwitterException: TwitterException
+     * @implNote Session manager keep tracks for each session lastOffsetId
+     */
     @Override
-    @Transactional
-    public StatusListPayload fetchStatusFromSource(String source, Long lastOffsetTime) throws TwitterException {
-        Twitter twitter = TwitterConfigurationSingleton.getTwitterInstance();
+    public StatusListPayload fetchStatusFromSource(String source, Long lastOffsetId) throws TwitterException {
+        Twitter twitter = TwitterConfigurationInstance.getTwitterInstance();
         Query query = new Query(source);
-        if(lastOffsetTime>0) {
-            query.sinceId(lastOffsetTime);
-        }
+        if (lastOffsetId > 0)
+            query.sinceId(lastOffsetId);
         QueryResult result = twitter.search(query);
         return new StatusListPayload(result.getTweets(), result.getMaxId());
     }
 
+    /**
+     * Implementation to fetch list of tweets from a particular username
+     *
+     * @param user         :String
+     * @param lastOffsetId : Long
+     * @return StatusListPayload
+     * @throws TwitterException: TwitterException
+     */
     @Override
-    public StatusListPayload fetchStatusForUser(String user, Long lastOffsetTime) throws TwitterException {
-        Twitter twitter = TwitterConfigurationSingleton.getTwitterInstance();
-        return new StatusListPayload(twitter.getUserTimeline(user), lastOffsetTime);
+    public StatusListPayload fetchStatusForUser(String user, Long lastOffsetId) throws TwitterException {
+        Twitter twitter = TwitterConfigurationInstance.getTwitterInstance();
+        return new StatusListPayload(twitter.getUserTimeline(user), lastOffsetId);
     }
 }
     

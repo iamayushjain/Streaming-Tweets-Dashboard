@@ -26,15 +26,16 @@ public class TweetsController {
 
     private final String STREAM_TWEETS_API = "/tweets/";
     private final String STREAM_TWEETS_WITH_SENTIMENTS_API = "/tweets_sentiment/";
+
     @Autowired
     private TweetsServiceImpl tweetsServiceImpl;
 
-
     /**
-     * test case such as empty source etc
-     * @todo add sliding window for every external request
+     * handle test case such as empty source etc
+     *
      * @param source: String
      * @return data: List<Tweets>
+     * @todo add sliding window for every external request
      */
     @RequestMapping(
             value = STREAM_TWEETS_API,
@@ -70,6 +71,7 @@ public class TweetsController {
 
     /**
      * response in case of error
+     *
      * @return response: {@link BaseResponse}
      */
     private BaseResponse getInvalidParamsResponse() {

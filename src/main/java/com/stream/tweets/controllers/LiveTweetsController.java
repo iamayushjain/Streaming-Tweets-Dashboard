@@ -29,11 +29,12 @@ public class LiveTweetsController {
 
     /**
      * Web socket implementation for live tweets
-     * @implNote Session Id help us to determine whether the socket connection is open or not.
-     * Session Manager contains last sinceId for each user query
+     *
      * @param source         : String
      * @param headerAccessor : {@link SimpMessageHeaderAccessor}
      * @throws Exception : {@link twitter4j.TwitterException}
+     * @implNote Session Id help us to determine whether the socket connection is open or not.
+     * Session Manager contains last sinceId for each user query
      */
     @MessageMapping({LIVE_TWEETS_API})
     public void liveTweets(@DestinationVariable String source, SimpMessageHeaderAccessor headerAccessor) throws Exception {
@@ -44,11 +45,9 @@ public class LiveTweetsController {
             simpMessagingTemplate.convertAndSend(Constants.TOPIC_BROKER + Constants.TOPIC_BROKER_SOURCE + Constants.TOPIC_BROKER_SOURCE_DELIMITER + source, tweetsListPayload.getTweetList());
 
             synchronized (this) {
-                if (SessionManager.userIdMapping.containsKey(sessionId))
-                    SessionManager.userIdMapping.put(sessionId, tweetsListPayload.getLastSinceId());
-                else {
+                if (!SessionManager.userIdMapping.containsKey(sessionId))
                     break;
-                }
+                SessionManager.userIdMapping.put(sessionId, tweetsListPayload.getLastSinceId());
             }
             // simulated delay
             Thread.sleep(Constants.REFRESH_RATE);

@@ -1,21 +1,31 @@
 package com.stream.tweets.dao;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
-public class TwitterConfigurationSingleton extends TwitterFactory{
+/**
+ * Singleton class for twitter configuration
+ */
+public class TwitterConfigurationInstance extends TwitterFactory {
     private static Twitter instance;
+    private static final Logger logger = LoggerFactory.getLogger(TwitterConfigurationInstance.class);
 
-    private TwitterConfigurationSingleton() {
+    private TwitterConfigurationInstance() {
     }
 
+    /**
+     * Thread Safe Singleton instance generation
+     *
+     * @return Twitter
+     */
     public static Twitter getTwitterInstance() {
         if (instance == null) {
-
-            synchronized (TwitterConfigurationSingleton.class) {
+            synchronized (TwitterConfigurationInstance.class) {
                 if (instance == null) {
-                    System.out.println("init client");
+                    logger.info("Init Twitter Client");
                     ConfigurationBuilder cb = new ConfigurationBuilder();
                     cb.setDebugEnabled(true)
                             .setOAuthConsumerKey("8ml4j0HO3hvZRJhGgZzTKbD9U")
